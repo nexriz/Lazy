@@ -1,7 +1,10 @@
 const io = require('socket.io-client')
 const rl = require('readline')
 const color = require('chalk')
-const socket = io('http://localhost:8080')
+const socket = io('http://127.0.0.1:8080')
+
+const inout = []
+let shouldExit = false;
 
 socket.on(
     'connection', 
@@ -11,12 +14,13 @@ socket.on(
     }
 )
 socket.on(
-    'disconnection', 
-    (data) => console.log(color.yellow(data))
+    'disconnect', 
+    (data) => {
+        console.log("\n" + color.yellow(data))
+        console.log(arr)
+        process.exit()
+    }
 )
-
-const inout = []
-let shouldExit = false;
 
 async function loop () {
     while(!shouldExit) {

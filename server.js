@@ -3,6 +3,7 @@ const server = require('http').createServer()
 const io = require('socket.io')(server)
 
 io.on('connection', (client) => {
+    
     client.emit(
         'connection', 
         "You are connected"
@@ -10,9 +11,10 @@ io.on('connection', (client) => {
     client.on(
         'console', 
         (data) => {
+
             control(data)
                 .then(cl => {
-                    console.log('server',cl)
+                    console.log('server', cl)
                     client.emit('client', cl) })
                 .catch(e => {
                     console.error(e)
@@ -23,8 +25,15 @@ io.on('connection', (client) => {
         'disconnect', 
         console.log
     )
-})
+    process.on(
+        'beforeExit', 
+        () => client.broadcast.emit(
+            'disconnect', 
+            'disconect'
+        )
+    )
 
+})
 server.listen(8080, 
     () => console.log('Socket server is running!'))
 
