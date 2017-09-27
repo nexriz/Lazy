@@ -1,6 +1,7 @@
 const { spawn, exec } = require('child_process')
 const server = require('http').createServer()
 const io = require('socket.io')(server)
+const commands = require('./commands')
 
 io.on('connection', (client) => {
     
@@ -11,7 +12,6 @@ io.on('connection', (client) => {
     client.on(
         'console', 
         (data) => {
-
             control(data)
                 .then(cl => {
                     console.log('server', cl)
@@ -36,18 +36,35 @@ io.on('connection', (client) => {
 })
 server.listen(8080, 
     () => console.log('Socket server is running!'))
+const control = 
+        command => new Promise(
+            (resolve, reject) => {
+                const args = command.split(' ')
+                console.log(args)
+                if(check_commands(args[0])) {
+                    exec(commands[args[0]](args[1]), (err, data) => {
+                        resolve(data)
+                    })
+                }
+                else {
+                    try {
+                        exec(command, (err, data) => {
+                            err && console.error(err)
+                            resolve(data)
+                        })
+                    }
+                    catch(err) {
+                        reject(err)
+                    }     
+            }       
+        }
+    )
 
-function control (command) {
-    return new Promise((resolve, reject) => {
-        try {
-            exec(command, (err, data) => {
-                    err && console.error(err)
-                    resolve(data)
-            })
-        }
-        catch (err) {
-            if(err)
-                reject(err)            
-        }
-    })
+
+const check_commands = command => {
+    for (cmd in commands) {
+        if(command === cmd)
+            return true
+    }
+    return false
 }

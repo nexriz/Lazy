@@ -1,7 +1,8 @@
+#!/usr/bin/env node
 const io = require('socket.io-client')
 const rl = require('readline')
 const color = require('chalk')
-const socket = io('http://127.0.0.1:8080')
+const socket = io('http://localhost:8080')
 
 const inout = []
 let shouldExit = false;
@@ -17,7 +18,7 @@ socket.on(
     'disconnect', 
     (data) => {
         console.log("\n" + color.yellow(data))
-        console.log(arr)
+        console.log(inout)
         process.exit()
     }
 )
