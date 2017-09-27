@@ -1,7 +1,12 @@
 const path = require('path')
+const nirdir = path.resolve('c:/nircmd/nircmd.exe')
 
 module.exports = {
-    mute: () => `${path.resolve('c:/nircmd/nircmd.exe')} mutesysvolume 1`,
-    unmute: () => `${path.resolve('c:/nircmd/nircmd.exe')} mutesysvolume 0`,
-    setvolume: setvolume => `${path.resolve('c:/nircmd/nircmd.exe')} setsysvolume ${65535 * ((setvolume > 100 ? 100 : setvolume) / 100)}`,
+    mute: () => `${nirdir} mutesysvolume 1`,
+    unmute: () => `${nirdir} mutesysvolume 0`,
+    setvolume: value => `${nirdir} setsysvolume ${volume(value)}`,
+}
+
+function volume(value) {
+    return 65535 * ((value > 100 || value < 0 ? 100 : value) / 100)
 }

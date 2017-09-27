@@ -40,11 +40,11 @@ const control =
         command => new Promise(
             (resolve, reject) => {
                 const args = command.split(' ')
-                console.log(args)
                 if(check_commands(args[0])) {
-                    exec(commands[args[0]](args[1]), (err, data) => {
-                        resolve(data)
-                    })
+                    exec(commands[args[0]](args.slice(1).join(" ")), 
+                        (err, data) => {
+                            resolve(args[0] + ' ' + args.slice(1).join(" "))
+                        })
                 }
                 else {
                     try {

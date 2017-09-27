@@ -3,13 +3,10 @@ const unzip = require('unzip')
 const fs = require('fs')
 const path = require('path')
 
-if(!check_if_exist()) {
-    download_program().then(() => {
-        require('./server')
-    })
-}
-else {
+if(check_if_exist()) {
     require('./server')
+} else {
+    download_program().then(() => require('./server'))
 }
 
 async function download_program() {
