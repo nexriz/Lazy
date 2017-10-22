@@ -11,10 +11,17 @@ if(check_if_exist()) {
 
 async function download_program() {
     const a = await fetch('http://www.nirsoft.net/utils/nircmd.zip')
-    .then(res => {
-        res.body.pipe(unzip.Extract({path: path.resolve('c:/nircmd')}))
-    })
+    a.body.pipe(unzip.Extract({path: path.resolve('c:/nircmd')}))
     return a;
+}
+
+function afetch() {
+    return new Promise(resolve => {
+        fetch('http://www.nirsoft.net/utils/nircmd.zip')
+        .then(res => {        
+            resolve(res)
+        })
+    })
 }
 
 function check_if_exist () {

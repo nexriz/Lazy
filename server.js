@@ -4,7 +4,6 @@ const io = require('socket.io')(server)
 const commands = require('./commands')
 
 io.on('connection', (client) => {
-    
     client.emit(
         'connection', 
         "You are connected"
@@ -34,11 +33,11 @@ io.on('connection', (client) => {
     )
 
 })
-server.listen(8080, 
-    () => console.log('Socket server is running!'))
-const control = 
-        command => new Promise(
-            (resolve, reject) => {
+
+server.listen(8080, () => console.log('Socket server is running!'))
+
+function control(command) { 
+        return new Promise((resolve, reject) => {
                 const args = command.split(' ')
                 if(check_commands(args[0])) {
                     exec(commands[args[0]](args.slice(1).join(" ")), 
@@ -59,12 +58,13 @@ const control =
             }       
         }
     )
+}
 
-
-const check_commands = command => {
-    for (cmd in commands) {
-        if(command === cmd)
-            return true
-    }
+function check_commands(command) {
+    // for (cmd in commands) {
+        //     if(command === cmd)
+        //         return true
+        // }
+    if(commands[command]) return true
     return false
 }
