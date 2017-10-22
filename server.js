@@ -34,7 +34,7 @@ io.on('connection', (client) => {
 
 })
 
-server.listen(8080, () => console.log('Socket server is running!'))
+server.listen(5656, () => console.log('Socket server is running!'))
 
 function control(command) { 
         return new Promise((resolve, reject) => {

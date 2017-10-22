@@ -4,7 +4,7 @@ const nirdir = path.resolve('c:/nircmd/nircmd.exe')
 module.exports = {
     mute: () => `${nirdir} mutesysvolume 1`,
     unmute: () => `${nirdir} mutesysvolume 0`,
-    sv: value => `${nirdir} setsysvolume ${value}`,
+    sv: value => `${nirdir} setsysvolume ${volume(value)}`,
 }
 
 function volume(value) {
