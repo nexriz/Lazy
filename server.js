@@ -61,10 +61,9 @@ function control(command) {
 }
 
 function check_commands(command) {
+    return command in commands ? true : false;
     // for (cmd in commands) {
         //     if(command === cmd)
         //         return true
         // }
-    if(commands[command]) return true
-    return false
 }
