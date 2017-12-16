@@ -2,7 +2,7 @@
 const io = require('socket.io-client')
 const rl = require('readline')
 const color = require('chalk')
-const socket = io('http://localhost:8080')
+const socket = io('http://localhost:3001')
 
 const inout = []
 let shouldExit = false;
