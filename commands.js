@@ -5,8 +5,7 @@ module.exports = {
     mute: () => nirdir + " mutesysvolume 1",
     unmute: () => nirdir + " mutesysvolume 0",
     sv: value => nirdir + ` setsysvolume ${volume(value)}`,
-    speak: text => nirdir + ` speak text "${text}"`,
-    key: keys => nirdir + ` sendkeypress ${keys}`
+    speak: text => `${nirdir} speak text \"${text}\"`
 }
 
 function volume(value) {
