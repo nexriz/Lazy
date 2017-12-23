@@ -3,6 +3,9 @@ const server = require('http').createServer()
 const io = require('socket.io')(server)
 const commands = require('./commands')
 
+const PORT = process.argv[2] || 3001
+
+
 io.on('connection', (client) => {
     client.emit(
         'connection', 
@@ -34,7 +37,7 @@ io.on('connection', (client) => {
 
 })
 
-server.listen(3001, () => console.log('Socket server is running!'))
+server.listen(PORT, () => console.log('Socket server is running on port', PORT))
 
 function control(command) { 
         return new Promise((resolve, reject) => {
